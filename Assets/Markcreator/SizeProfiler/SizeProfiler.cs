@@ -12,13 +12,14 @@ namespace Markcreator.SizeProfiler
 {
     public class SizeProfiler : EditorWindow
     {
-        public static readonly string version = "1.1";
+        public static readonly string version = "1.2";
         private Vector2 scrollPosition = Vector2.zero;
 
         public static Object target;
         public static List<Asset> assets = new List<Asset>();
         public static Directory dir;
         public static ListMode listMode = ListMode.Directory;
+        public static SortMode sortMode = SortMode.Size;
 
         [MenuItem("GameObject/Size Profiler", false, 0), MenuItem("Markcreator/Size Profiler/Open Menu", false, 1000)]
         public static void OpenMenu()
@@ -95,23 +96,40 @@ namespace Markcreator.SizeProfiler
             GUILayout.Space(5);
             listMode = (ListMode)EditorGUILayout.EnumPopup("List Mode", listMode);
             GUILayout.Space(5);
+            sortMode = (SortMode)EditorGUILayout.EnumPopup("Sort Mode", sortMode);
+            GUILayout.Space(5);
+
+            GUILayout.BeginHorizontal();
             if (GUILayout.Button("Refresh")) LoadSize(target);
+            if (listMode == ListMode.Directory && GUILayout.Button(dir.foldout ? "Fold All" : "Unfold All")) dir.Foldout(!dir.foldout, true);
+            GUILayout.EndHorizontal();
 
             GUILayout.EndVertical(); // End Object box
 
             GUILayout.Space(10);
 
-            if (dir != null) {
+            if (dir != null)
+            {
                 GUILayout.Label("Total size: " + EditorUtility.FormatBytes(dir.size));
                 GUILayout.Space(10);
 
                 switch (listMode)
                 {
                     case ListMode.Directory:
-                        dir.PrintEditorRecursive(scrollRect);
+                        dir.PrintEditorRecursive(scrollRect, sortMode);
                         break;
                     case ListMode.Flat:
-                        foreach (Asset asset in assets.OrderBy(i => i.size).Reverse())
+                        IEnumerable<Asset> sortedAssets = null;
+                        if (sortMode == SortMode.Size)
+                        {
+                            sortedAssets = assets.OrderBy(i => i.size).Reverse();
+                        }
+                        else if (sortMode == SortMode.Alphabetical)
+                        {
+                            sortedAssets = assets.OrderBy(i => i.name);
+                        }
+
+                        foreach (Asset asset in sortedAssets)
                         {
                             asset.PrintEditor(Rect.zero);
                         }
@@ -217,10 +235,10 @@ namespace Markcreator.SizeProfiler
     {
         public string path;
         public long size;
+        public bool foldout = false;
+
         private Directory parent;
         private Dictionary<string, Directory> subdirs = new Dictionary<string, Directory>();
-
-        private bool foldout = false;
 
         public Directory(Directory parent = null, string path = "", long size = 0, Dictionary<string, Directory> subdirs = null)
         {
@@ -255,10 +273,20 @@ namespace Markcreator.SizeProfiler
             if (parent != null) parent.AddSizeRecursive(size);
         }
 
-        public void PrintEditorRecursive(Rect rect)
+        public void PrintEditorRecursive(Rect rect, SortMode sortMode)
         {
             if (subdirs != null) {
-                foreach (Directory dir in subdirs.Values.OrderBy(i => i.size).Reverse())
+                IEnumerable<Directory> sortedDirs = null;
+                if (sortMode == SortMode.Size)
+                {
+                    sortedDirs = subdirs.Values.OrderBy(i => i.size).Reverse();
+                }
+                else if (sortMode == SortMode.Alphabetical)
+                {
+                    sortedDirs = subdirs.Values.OrderBy(i => i.path);
+                }
+
+                foreach (Directory dir in sortedDirs)
                 {
                     if (dir != null) {
                         if (dir is Asset)
@@ -268,7 +296,7 @@ namespace Markcreator.SizeProfiler
                         else if (dir.foldout = EditorGUILayout.Foldout(dir.foldout, dir.path + " (" + EditorUtility.FormatBytes(dir.size) + ")", true))
                         {
                             EditorGUI.indentLevel++;
-                            dir.PrintEditorRecursive(rect);
+                            dir.PrintEditorRecursive(rect, sortMode);
                             EditorGUI.indentLevel--;
                         }
                     }
@@ -276,6 +304,16 @@ namespace Markcreator.SizeProfiler
             }
         }
 
+        public void Foldout(bool open, bool recursive = false)
+        {
+            foldout = open;
+
+            if (recursive)
+            {
+                foreach (Directory dir in subdirs.Values) dir.Foldout(open, recursive);
+            }
+        }
+        
         public override string ToString()
         {
             string composite = JsonUtility.ToJson(this);
@@ -288,6 +326,7 @@ namespace Markcreator.SizeProfiler
     {
         public Object o;
         public string suffix;
+                public string name => o.name;
 
         public Asset(string path, long size, Object o) : base(null, path, size, null)
         {
@@ -305,6 +344,12 @@ namespace Markcreator.SizeProfiler
     {
         Directory,
         Flat
+    }
+
+    public enum SortMode
+    {
+        Size,
+        Alphabetical
     }
 }
 #endif
