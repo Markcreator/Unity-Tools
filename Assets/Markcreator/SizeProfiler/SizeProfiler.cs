@@ -12,7 +12,7 @@ namespace Markcreator.SizeProfiler
 {
     public class SizeProfiler : EditorWindow
     {
-        public static readonly string version = "1.2";
+        public static readonly string version = "1.2.1";
         private Vector2 scrollPosition = Vector2.zero;
 
         public static Object target;
@@ -101,7 +101,7 @@ namespace Markcreator.SizeProfiler
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Refresh")) LoadSize(target);
-            if (listMode == ListMode.Directory && GUILayout.Button(dir.foldout ? "Fold All" : "Unfold All")) dir.Foldout(!dir.foldout, true);
+            if (dir != null && listMode == ListMode.Directory && GUILayout.Button(dir.foldout ? "Fold All" : "Unfold All")) dir.Foldout(!dir.foldout, true);
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical(); // End Object box

@@ -78,11 +78,11 @@ public static class VRCTextureCompressor
                                 {
                                     bool changed = false;
 
-                                    if (textureImporter.crunchedCompression != true)
+                                    /*if (textureImporter.crunchedCompression != true)
                                     {
                                         if (pass == Pass.Execution) textureImporter.crunchedCompression = true;
                                         changed = true;
-                                    }
+                                    }*/
                                     if (textureImporter.textureCompression != TextureImporterCompression.Compressed)
                                     {
                                         if (pass == Pass.Execution) textureImporter.textureCompression = TextureImporterCompression.Compressed;
