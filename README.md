@@ -12,7 +12,7 @@
   <br />
 </div>
 
-## [SizeProfiler v1.1](https://github.com/Markcreator/Unity-Tools/releases/download/SizeProfiler.v1.1/SizeProfiler.v1.1.unitypackage)
+## [SizeProfiler v1.2](https://github.com/Markcreator/Unity-Tools/releases/download/SizeProfiler.v1.2/SizeProfiler.v1.2.unitypackage)
 
 An interface that lets you inspect any object in Unity and find its dependencies and file size breakdown.
 
