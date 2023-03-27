@@ -12,13 +12,13 @@
   <br />
 </div>
 
-## [SizeProfiler v1.2.1](https://github.com/Markcreator/Unity-Tools/releases/download/SizeProfiler.v1.2/SizeProfiler.v1.2.1.unitypackage)
+## [SizeProfiler v1.2.1](https://github.com/Markcreator/Unity-Tools/releases/download/SizeProfiler.v1.2.1/SizeProfiler.v1.2.1.unitypackage)
 
 An interface that lets you inspect any object in Unity and find its dependencies and file size breakdown.
 
 <br />
 
-## [VRCTextureCompressor v1.1.1](https://github.com/Markcreator/Unity-Tools/releases/download/VRCTextureCompressor.v1.1/VRCTextureCompressor.v1.1.1.unitypackage)
+## [VRCTextureCompressor v1.1.1](https://github.com/Markcreator/Unity-Tools/releases/download/VRCTextureCompressor.v1.1.1/VRCTextureCompressor.v1.1.1.unitypackage)
 
 A background script that automatically handles texture compression so that VRChat avatars always upload small and optimized.
  
