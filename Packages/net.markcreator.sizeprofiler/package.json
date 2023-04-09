@@ -1,0 +1,12 @@
+{
+  "name": "net.markcreator.sizeprofiler",
+  "displayName": "SizeProfiler",
+  "version": "1.2.1",
+  "description": "An interface that lets you inspect any object in Unity and find its dependencies and file size breakdown.",
+  "gitDependencies": {},
+  "vpmDependencies": {},
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "localPath": "C:\\Users\\markm\\Bureaublad\\Local Projects\\UnityTools\\Packages\\net.markcreator.sizeprofiler",
+  "type": "tool"
+}

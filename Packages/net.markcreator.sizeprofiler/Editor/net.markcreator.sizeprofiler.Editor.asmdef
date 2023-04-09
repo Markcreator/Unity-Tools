@@ -1,0 +1,14 @@
+{
+  "name": "net.markcreator.sizeprofiler.Editor",
+  "references": [
+    "net.markcreator.sizeprofiler"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "autoReferenced": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "defineConstraints": [],
+  "optionalUnityReferences": []
+}
