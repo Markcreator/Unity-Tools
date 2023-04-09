@@ -18,7 +18,7 @@ An interface that lets you inspect any object in Unity and find its dependencies
 
 <br />
 
-## [VRCTextureCompressor](https://github.com/Markcreator/VRCTextureCompressor)
+## [VRCTextureCompressor](https://github.com/Markcreator/VRCTextureCompressor/releases)
 
 A background script that automatically handles texture compression so that VRChat avatars always upload small and optimized.
  
