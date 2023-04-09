@@ -1,1 +1,0 @@
-# net.markcreator.vrctexturecompressor by Markcreator
