@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: main
-    paths: Packages/com.vrchat.demo-template/**
+    paths: Packages/net.markcreator.sizeprofiler/**
 
 env:
-  packageName: "com.vrchat.demo-template"
+  packageName: "net.markcreator.sizeprofiler"
 
 permissions:
   contents: write
