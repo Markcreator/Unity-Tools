@@ -32,3 +32,8 @@ A background script that automatically handles texture compression so that VRCha
 > It also means that avatar creators can include this script in their avatar packages if they want to guarantee that people can never forget to optimize their textures before uploading. (You can also set your textures to not use crunch compression by default, which speeds up your package import time by a lot!)
   
 </details>
+
+## [TransformCopy](https://github.com/Markcreator/Unity-Tools/blob/main/Scripts/TransformCopy/)
+
+An interface that lets you copy all the positions, rotations, and scales from one gameobject and its children to another.
+Useful for quickly synchronizing an FBX to an existing model in a scene and such.
