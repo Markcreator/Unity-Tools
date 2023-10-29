@@ -62,7 +62,6 @@ public class TransformCopy : EditorWindow
                     }
 
                     transforms.Add(path, new TransformData(t));
-                    Debug.LogWarning(path);
                 }
 
                 int group = Undo.GetCurrentGroup();
