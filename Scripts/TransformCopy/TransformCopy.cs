@@ -7,7 +7,7 @@ using UnityEngine;
 public class TransformCopy : EditorWindow
 {
     private const string NAME = "TransformCopy";
-    private const string VERSION = "1.0";
+    private const string VERSION = "1.1";
     private const string PRODUCT_URL = "https://github.com/Markcreator/Unity-Tools";
     private Vector2 scrollPosition = Vector2.zero;
     private GameObject from;
@@ -53,22 +53,26 @@ public class TransformCopy : EditorWindow
 
                 foreach (Transform t in from.GetComponentsInChildren<Transform>(true))
                 {
-                    if (transforms.ContainsKey(t.name))
+                    string path = t.GetPath(from.transform);
+
+                    if (transforms.ContainsKey(path))
                     {
-                        Debug.LogError($"GameObject has duplicate transform names for '{t.name}'. Ignoring.");
+                        Debug.LogError($"GameObject has duplicate transform names for '{path}'. Ignoring.");
                         continue;
                     }
 
-                    transforms.Add(t.name, new TransformData(t));
+                    transforms.Add(path, new TransformData(t));
+                    Debug.LogWarning(path);
                 }
 
                 int group = Undo.GetCurrentGroup();
                 foreach (Transform t in to.GetComponentsInChildren<Transform>(true))
                 {
-                    if (!transforms.ContainsKey(t.name))
+                    string path = t.GetPath(to.transform);
+                    if (!transforms.ContainsKey(path))
                         continue;
 
-                    var transform = transforms[t.name];
+                    var transform = transforms[path];
                     Undo.RecordObject(t, "Applied Transform");
                     transform.ApplyTo(t);
                     EditorUtility.SetDirty(t);
@@ -130,8 +134,18 @@ public class TransformCopy : EditorWindow
     }
 }
 
+internal static class TransformExtension
+{
+    internal static string GetPath(this Transform current, Transform relative = null)
+    {
+        if (current.parent == null || (relative && current.parent.name.Equals(relative.name)))
+            return current.name;
+        return current.parent.GetPath(relative) + "/" + current.name;
+    }
+}
+
 [Serializable]
-public class TransformData
+internal class TransformData
 {
     public Vector3 LocalPosition = Vector3.zero;
     public Vector3 LocalEulerRotation = Vector3.zero;
